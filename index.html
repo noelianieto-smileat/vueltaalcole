@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smileat · Vuelta al Cole</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <div class="logo-chip"><img src="assets/logo-smileat.png" alt="Smileat"></div>
+      <span class="header-tag">Informe de campaña</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Meta Ads · Google Ads · GA4</span>
+      <h1>Vuelta al Cole</h1>
+      <p class="lede" id="hero-lede"></p>
+      <div class="hero-meta">
+        <span><b>Meta Ads:</b> <span id="hero-periodo-meta"></span></span>
+        <span><b>Google Ads:</b> <span id="hero-periodo-google"></span></span>
+        <span><b>GA4 producto:</b> <span id="hero-periodo-productos"></span></span>
+      </div>
+      <div class="kpi-row" id="kpi-row"></div>
+    </div>
+  </section>
+
+  <section class="block tint">
+    <div class="wrap">
+      <div class="block-head">
+        <span class="kicker">Creatividades</span>
+        <h2>Meta Ads · rendimiento por creatividad</h2>
+        <p>Cinco creatividades activas en la campaña, ordenadas de mayor a menor número de resultados.</p>
+      </div>
+      <div class="creative-grid" id="creative-grid"></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="block-head">
+        <span class="kicker">Google Ads &amp; producto</span>
+        <h2>Performance Max y ventas por artículo (GA4)</h2>
+      </div>
+      <div class="split-grid" id="split-grid"></div>
+    </div>
+  </section>
+
+  <footer class="site-footer">Smileat · Informe de campaña Vuelta al Cole · 5 creatividades Meta Ads</footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
