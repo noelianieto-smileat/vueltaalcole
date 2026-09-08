@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smileat · Vuelta al Cole</title>
+<style>
+
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&display=swap');
+
+  :root{
+    --brand: #29abe2;
+    --ink: #10222c;
+    --ink-dim: #7c8a96;
+    --page-bg: #eef3f6;
+    --card-bg: #ffffff;
+    --chip-bg: #f3f6f9;
+    --line: #e3eaf0;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin:0; padding:0;
+    background: var(--page-bg);
+    color: var(--ink);
+    font-family: 'Montserrat', sans-serif;
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* cabecera */
+  header{
+    background: var(--brand);
+    color: #ffffff;
+    padding: 26px 24px 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  header .logo-chip{
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+  }
+  header img.logo{ height: 30px; width: auto; }
+  header h1{
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+  }
+  header p{
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* barra de cifras clave */
+  .kpi-bar{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .kpi-chip{
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .kpi-chip b{ font-weight: 900; }
+
+  /* secciones */
+  .section-kicker{
+    max-width: 1240px;
+    margin: 34px auto 14px;
+    padding: 0 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+
+  main{
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 20px 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  .card{
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(16,34,44,0.05), 0 1px 2px rgba(16,34,44,0.05);
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.15s ease;
+  }
+  .card:hover{
+    box-shadow: 0 6px 18px rgba(16,34,44,0.09), 0 1px 2px rgba(16,34,44,0.06);
+  }
+
+  .rank{
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: var(--brand);
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 999px;
+    z-index: 2;
+  }
+
+  .media{
+    background: #10222c;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+  }
+  .media img, .media video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display:block;
+  }
+
+  .card-body{ padding: 16px 16px 18px; }
+
+  .card-title{
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--ink);
+    margin: 0 0 12px;
+  }
+
+  .stats{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .stat{
+    background: var(--chip-bg);
+    border-radius: 10px;
+    padding: 9px 6px;
+    text-align: center;
+  }
+  .stat .val{
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .stat .lab{
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-top: 4px;
+  }
+  .stat.good{ background: #e3f6ea; }
+  .stat.good .val{ color: #1a8f4c; }
+  .stat.mid{ background: #fdf3d7; }
+  .stat.mid .val{ color: #9a6b00; }
+  .stat.bad{ background: #fbe6e3; }
+  .stat.bad .val{ color: #c23a2a; }
+
+  /* fila resumen Google + GA4 */
+  .mini-grid{
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 20px 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+  .mini-card{
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px 20px;
+    box-shadow: 0 1px 3px rgba(16,34,44,0.06);
+  }
+  .mini-card h3{
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    margin: 0 0 4px;
+  }
+  .mini-card .mini-sub{
+    font-size: 11.5px;
+    color: var(--ink-dim);
+    margin-bottom: 12px;
+  }
+  .mini-stats{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(78px, 1fr));
+    gap: 8px;
+  }
+  .mini-list{ margin: 0; padding: 0; list-style: none; }
+  .mini-list li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 12.5px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .mini-list li:last-child{ border-bottom: none; }
+  .mini-list .p-rank{ color: var(--ink-dim); font-weight: 700; width: 16px; flex: none; }
+  .mini-list .p-name{ flex: 1; }
+  .mini-list .p-nums{ display: flex; align-items: center; gap: 8px; flex: none; }
+  .mini-list .p-qty{
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: var(--chip-bg);
+    color: var(--ink-dim);
+    white-space: nowrap;
+  }
+  .mini-list .p-qty.good{ background: #e3f6ea; color: #1a8f4c; }
+  .mini-list .p-qty.mid{ background: #fdf3d7; color: #9a6b00; }
+  .mini-list .p-qty.bad{ background: #fbe6e3; color: #c23a2a; }
+  .mini-list .p-rev{ font-family:'Nunito',sans-serif; font-weight:800; white-space:nowrap; width: 62px; text-align: right; }
+
+  footer{
+    text-align:center;
+    padding: 0 16px 40px;
+    font-size: 11.5px;
+    color: var(--ink-dim);
+  }
+
+  @media (max-width: 900px){
+    main{ grid-template-columns: repeat(2, 1fr); }
+    .mini-grid{ grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px){
+    main{ grid-template-columns: 1fr; }
+    header h1{ font-size: 18px; }
+    .mini-stats{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-chip">
+      <img class="logo" src="assets/logo-smileat.png" alt="Smileat">
+    </div>
+    <h1>VUELTA AL COLE</h1>
+    <p>Meta Ads · 30 ago – 7 sept 2026 · -30% primera suscripción / -15% en toda la web · Ordenado de mejor a peor (ventas)</p>
+    <div class="kpi-bar" id="kpi-bar"></div>
+  </header>
+
+  <div class="section-kicker">Creatividades · Meta Ads</div>
+  <main id="lista"></main>
+
+  <div class="section-kicker">Google Ads &amp; producto (GA4)</div>
+  <div class="mini-grid" id="mini-grid"></div>
+
+  <footer>5 creatividades · Meta Ads 30 ago – 7 sept · Google Ads y GA4 1 – 8 sept 2026 · Smileat · Informe de campaña Vuelta al Cole</footer>
+
+<script>
+
+  const CREATIVIDADES = [
+    {
+      type: "image", src: "media/IMG3_VUELTAALCOLE.jpg", nota: "IMG 3",
+      metricas: { resultados: "121", ingresos: "5.948,75 €", gasto: "923,23 €", costeResultado: "7,63 €", impresiones: "251.337", alcance: "58.385" }
+    },
+    {
+      type: "image", src: "media/IMG1_VUELTAALCOLE.jpg", nota: "IMG 1",
+      metricas: { resultados: "70", ingresos: "3.004,95 €", gasto: "518,84 €", costeResultado: "7,41 €", impresiones: "147.622", alcance: "35.876" }
+    },
+    {
+      type: "image", src: "media/IMG2_VUELTAALCOLE.jpg", nota: "IMG 2",
+      metricas: { resultados: "44", ingresos: "2.038,42 €", gasto: "447,81 €", costeResultado: "10,18 €", impresiones: "115.914", alcance: "30.791" }
+    },
+    {
+      type: "video", src: "media/VID1_VUELTAALCOLE.mp4", nota: "VID 1",
+      metricas: { resultados: "40", ingresos: "1.713,12 €", gasto: "537,38 €", costeResultado: "13,43 €", impresiones: "128.445", alcance: "34.100" }
+    },
+    {
+      type: "image", src: "media/IMG4_VUELTAALCOLE_UltimoPush.jpg", nota: "IMG 4 · Último Push",
+      metricas: { resultados: "15", ingresos: "636,51 €", gasto: "166,28 €", costeResultado: "11,09 €", impresiones: "40.664", alcance: "19.627" }
+    },
+  ];
+
+  const KPIS = [
+    { label: "Inversión", value: "2.593,54 €" },
+    { label: "Compras", value: "290" },
+    { label: "ROAS", value: "5,14x" },
+    { label: "Ingresos", value: "13.341,75 €" },
+  ];
+
+  const GOOGLE = {
+    label: "VUELTA AL COLE · 15% TODO Y 30% SUSCRIP.",
+    sub: "Grupo de recursos Performance Max · 1 – 31 ago 2026 · Pausado",
+    stats: [
+      { val: "32,40 €", lab: "Gasto" },
+      { val: "36,4", lab: "Conversiones" },
+      { val: "1.859,25 €", lab: "Ingresos" },
+      { val: "0,89 €", lab: "CPA" },
+      { val: "57,4x", lab: "ROAS" },
+    ]
+  };
+
+  const TOP_PRODUCTOS = [
+    { name: "Tarrito de cocidito con ternera y jamón", cantidad: 31, val: "65,21 €" },
+    { name: "Tarrito de guisito de alubias", cantidad: 30, val: "61,56 €" },
+    { name: "Tarrito de pollo con arroz y guisantes", cantidad: 27, val: "58,77 €" },
+    { name: "Tarrito de multifrutas con mango", cantidad: 25, val: "35,93 €" },
+    { name: "Tarrito de arándanos, plátano y manzana", cantidad: 24, val: "34,66 €" },
+    { name: "Tarrito de bacalao con patatas y verduras", cantidad: 23, val: "49,61 €" },
+    { name: "Tarrito de ternera con verduras", cantidad: 21, val: "45,37 €" },
+    { name: "Tarrito de verduras con lubina y merluza", cantidad: 21, val: "43,67 €" },
+    { name: "Tarrito de pavo y verduras", cantidad: 20, val: "43,08 €" },
+    { name: "Pouch de frutas variadas", cantidad: 19, val: "26,04 €" },
+  ];
+
+  const campos = [
+    ['resultados', 'Resultados'],
+    ['ingresos', 'Ingresos'],
+    ['gasto', 'Gasto'],
+    ['costeResultado', 'Coste/result.'],
+    ['impresiones', 'Impresiones'],
+    ['alcance', 'Alcance'],
+  ];
+
+  const UMBRALES = {
+    resultados:     { dir: 1,  bueno: 70,    regular: 15 },
+    ingresos:       { dir: 1,  bueno: 3000,  regular: 600 },
+    costeResultado: { dir: -1, bueno: 8,     regular: 11 },
+    alcance:        { dir: 1,  bueno: 45000, regular: 18000 },
+  };
+
+  const UMBRAL_PRODUCTO = { dir: 1, bueno: 10, regular: 5 };
+
+  function parseNum(str){
+    if (str == null) return NaN;
+    const limpio = String(str).replace(/[€%x\s]/g, '').replace(/\./g, '').replace(',', '.');
+    const n = parseFloat(limpio);
+    return isNaN(n) ? NaN : n;
+  }
+
+  function claseColor(valor, umbral){
+    if (isNaN(valor)) return null;
+    const { dir, bueno, regular } = umbral;
+    if (dir === 1){
+      if (valor >= bueno) return 'good';
+      if (valor >= regular) return 'mid';
+      return 'bad';
+    } else {
+      if (valor <= bueno) return 'good';
+      if (valor <= regular) return 'mid';
+      return 'bad';
+    }
+  }
+
+  function calcularColores(contenido){
+    return contenido.map(item => {
+      const colorItem = {};
+      Object.keys(UMBRALES).forEach(key => {
+        const val = parseNum(item.metricas?.[key]);
+        const cls = claseColor(val, UMBRALES[key]);
+        if (cls) colorItem[key] = cls;
+      });
+      return colorItem;
+    });
+  }
+
+  // KPI bar
+  document.getElementById('kpi-bar').innerHTML = KPIS.map(k =>
+    `<div class="kpi-chip">${k.label}: <b>${k.value}</b></div>`
+  ).join('');
+
+  // Creative cards
+  const lista = document.getElementById('lista');
+  const colores = calcularColores(CREATIVIDADES);
+  CREATIVIDADES.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const mediaEl = item.type === 'video'
+      ? `<video src="${item.src}" controls playsinline muted loop></video>`
+      : `<img src="${item.src}" alt="${item.nota || ''}">`;
+
+    const m = item.metricas || {};
+    const colorItem = colores[i] || {};
+    const statsHtml = campos.map(([key, label]) => {
+      const clsColor = colorItem[key] ? ` ${colorItem[key]}` : '';
+      return `
+      <div class="stat${clsColor}">
+        <div class="val">${m[key] ?? '—'}</div>
+        <div class="lab">${label}</div>
+      </div>`;
+    }).join('');
+
+    card.innerHTML = `
+      <div class="rank">#${i + 1}</div>
+      <div class="media">${mediaEl}</div>
+      <div class="card-body">
+        <p class="card-title">${item.nota || ''}</p>
+        <div class="stats">${statsHtml}</div>
+      </div>
+    `;
+    lista.appendChild(card);
+  });
+
+  // Google + GA4 mini cards
+  document.getElementById('mini-grid').innerHTML = `
+    <div class="mini-card">
+      <h3>${GOOGLE.label}</h3>
+      <div class="mini-sub">${GOOGLE.sub}</div>
+      <div class="mini-stats">
+        ${GOOGLE.stats.map(s => `<div class="stat"><div class="val">${s.val}</div><div class="lab">${s.lab}</div></div>`).join('')}
+      </div>
+    </div>
+    <div class="mini-card">
+      <h3>Top 10 productos (GA4)</h3>
+      <div class="mini-sub">Unidades vendidas e ingresos a nivel de artículo · 30 ago – 8 sept 2026 (GA4)</div>
+      <ul class="mini-list">
+        ${TOP_PRODUCTOS.map((p, i) => {
+          const cls = claseColor(p.cantidad, UMBRAL_PRODUCTO);
+          return `<li>
+            <span class="p-rank">${i + 1}</span>
+            <span class="p-name">${p.name}</span>
+            <span class="p-nums">
+              <span class="p-qty${cls ? ' ' + cls : ''}">${p.cantidad} ud.</span>
+              <span class="p-rev">${p.val}</span>
+            </span>
+          </li>`;
+        }).join('')}
+      </ul>
+    </div>
+  `;
+
+</script>
+</body>
+</html>
